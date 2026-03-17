@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: AI Trading Research Platform
+  
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+  
+  web:
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "*"
+      allowed-headers: "*"
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 10000
+    password: ""
+    database: 0
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+logging:
+  level:
+    root: INFO
+    com.aitrading: DEBUG
+  file:
+    name: logs/app.log
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+app:
+  name: AI Trading Research Platform
+  environment: development
+  debug: true
+  log-level: INFO
+  api-port: 8080
+  api-host: 0.0.0.0
+  
+  # API Keys
+  anthropic-api-key: ${ANTHROPIC_API_KEY:}
+  alpha-vantage-api-key: ${ALPHA_VANTAGE_API_KEY:}
+  fmp-api-key: ${FMP_API_KEY:}
+  twelve-data-api-key: ${TWELVE_DATA_API_KEY:}
+  
+  # Cache & Retry
+  cache-expiry: 3600
+  max-retries: 3
+  retry-delay: 5
+  
+  # Model Configuration
+  max-tokens: 2048
+  temperature: 0.7
+  
+  # Feature Flags
+  enable-llm: ${ENABLE_LLM:false}
+  force-file-cache: ${FORCE_FILE_CACHE:true}
+  disable-cache: ${DISABLE_CACHE:false}
+  redis-url: ${REDIS_URL:redis://localhost:6379/0}
